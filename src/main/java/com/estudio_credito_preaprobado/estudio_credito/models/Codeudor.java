@@ -1,9 +1,15 @@
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -83,6 +89,16 @@ public class Codeudor {
     
     @Size(max = 30)
     private String telefono_pariente;
+    
+    @ManyToMany
+    @JoinTable(name = "codeudor_referencias_comerciales", joinColumns =  @JoinColumn(name = "codeudor_id"), inverseJoinColumns = @JoinColumn(name = "referencias_comerciales_id"))
+    @Column(nullable = false)
+    private Set<ReferenciasComerciales> referencias_comerciales = new HashSet<>();
+    
+    
+    @ManyToMany
+    @JoinTable(name = "codeudor_referencias_personales", joinColumns =  @JoinColumn(name = "codeudor_id"), inverseJoinColumns = @JoinColumn(name = "referencias_personales_id"))
+    private Set<ReferenciasPersonales> referencias_personales = new HashSet<>();
 
     public Codeudor() {
     }

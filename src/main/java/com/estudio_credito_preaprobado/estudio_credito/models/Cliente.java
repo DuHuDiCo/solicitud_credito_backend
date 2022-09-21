@@ -1,10 +1,16 @@
 
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -74,6 +80,10 @@ public class Cliente {
     @Size(max = 20)
     private String tipo_casa;
     
+    
+    private float valor_alquiler;
+    
+    
     @Size(max = 100)
     private String propietario;
     
@@ -103,6 +113,16 @@ public class Cliente {
     
     @Size(max = 20)
     private String telefono_pariente;
+    
+    @ManyToMany
+    @JoinTable(name = "cliente_referencias_comerciales", joinColumns =  @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "referencias_comerciales_id"))
+    @Column(nullable = false)
+    private Set<ReferenciasComerciales> referencias_comerciales = new HashSet<>();
+    
+    
+    @ManyToMany
+    @JoinTable(name = "cliente_referencias_personales", joinColumns =  @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "referencias_personales_id"))
+    private Set<ReferenciasPersonales> referencias_personales = new HashSet<>();
 
     
     public Cliente() {
@@ -183,6 +203,16 @@ public class Cliente {
     public String getEmpresa() {
         return empresa;
     }
+
+    public float getValor_alquiler() {
+        return valor_alquiler;
+    }
+
+    public void setValor_alquiler(float valor_alquiler) {
+        this.valor_alquiler = valor_alquiler;
+    }
+    
+        
 
     public void setEmpresa(String empresa) {
         this.empresa = empresa;

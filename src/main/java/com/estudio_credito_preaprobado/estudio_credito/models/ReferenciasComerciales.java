@@ -2,9 +2,11 @@
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -22,6 +24,10 @@ public class ReferenciasComerciales {
     
     
     private String referencia;
+    
+    
+    
+   
 
     public ReferenciasComerciales() {
     }
