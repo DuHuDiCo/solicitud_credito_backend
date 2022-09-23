@@ -14,8 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Cliente {
-    
+public class Cliente  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,9 +42,6 @@ public class Cliente {
     private String direccion;
     
     
-    @Size(max = 20)
-    private String telefono;
-    
     
     
     @Size(max = 20)
@@ -60,6 +56,9 @@ public class Cliente {
     
     @Size(max = 50)
     private String empresa;
+    
+    @Size(max = 50)
+    private String direccion_empresa;
     
     
     
@@ -113,6 +112,9 @@ public class Cliente {
     
     @Size(max = 20)
     private String telefono_pariente;
+    
+    
+    private float valor_otros_ingresos;
     
     @ManyToMany
     @JoinTable(name = "cliente_referencias_comerciales", joinColumns =  @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "referencias_comerciales_id"))
@@ -176,13 +178,39 @@ public class Cliente {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getDireccion_empresa() {
+        return direccion_empresa;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setDireccion_empresa(String direccion_empresa) {
+        this.direccion_empresa = direccion_empresa;
     }
+
+    public float getValor_otros_ingresos() {
+        return valor_otros_ingresos;
+    }
+
+    public void setValor_otros_ingresos(float valor_otros_ingresos) {
+        this.valor_otros_ingresos = valor_otros_ingresos;
+    }
+
+    public Set<ReferenciasComerciales> getReferencias_comerciales() {
+        return referencias_comerciales;
+    }
+
+    public void setReferencias_comerciales(Set<ReferenciasComerciales> referencias_comerciales) {
+        this.referencias_comerciales = referencias_comerciales;
+    }
+
+    public Set<ReferenciasPersonales> getReferencias_personales() {
+        return referencias_personales;
+    }
+
+    public void setReferencias_personales(Set<ReferenciasPersonales> referencias_personales) {
+        this.referencias_personales = referencias_personales;
+    }
+
+   
 
     public String getCelular() {
         return celular;

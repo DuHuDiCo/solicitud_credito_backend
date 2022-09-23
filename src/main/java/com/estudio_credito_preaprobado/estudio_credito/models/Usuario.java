@@ -1,6 +1,7 @@
 
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -19,8 +20,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {@UniqueConstraint(columnNames = "username"),@UniqueConstraint(columnNames = "email")})
-public class Usuario {
-    
+public class Usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

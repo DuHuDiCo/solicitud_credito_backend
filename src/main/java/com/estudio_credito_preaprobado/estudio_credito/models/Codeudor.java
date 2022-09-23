@@ -1,5 +1,6 @@
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -19,46 +20,69 @@ public class Codeudor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Size(max = 100)
+  
+    @Size(max = 100)    
     private String nombres;
+    
     
     @Size(max = 100)
     private String apellidos;
     
+    
     @Size(max = 20)
     private String cedula;
     
-    @Size(max = 50)
+   
+    
+    @Size(max = 10)
     private String estado_civil;
+    
+   
     
     @Size(max = 100)
     private String direccion;
     
-    @Size(max = 30)
-    private String telefono;
+    
+    
     
     @Size(max = 20)
     private String celular;
     
-    @Size(max = 100)
+    
+    
+    @Size(max = 50)
     private String email;
+    
+    
     
     @Size(max = 50)
     private String empresa;
     
+    @Size(max = 50)
+    private String direccion_empresa;
+    
+    
+    
     @Size(max = 30)
     private String cargo;
     
-    @Size(max = 30)
+    
+    
+    @Size(max = 50)
     private String tiempo_servicio;
+    
     
     private float salario;
     
     
     private String otros_ingresos;
     
-    @Size(max = 30)
+    @Size(max = 20)
     private String tipo_casa;
+    
+    
+    private float valor_alquiler;
+    
     
     @Size(max = 100)
     private String propietario;
@@ -66,13 +90,13 @@ public class Codeudor {
     @Size(max = 100)
     private String direccion_casa;
     
-    @Size(max = 30)
+    @Size(max = 50)
     private String telefono_casa;
     
-    @Size(max = 100)
+    @Size(max = 150)
     private String nombre_conyuge;
     
-    @Size(max = 100)
+    @Size(max = 50)
     private String trabajo_conyuge;
     
     @Size(max = 100)
@@ -84,50 +108,27 @@ public class Codeudor {
     @Size(max = 100)
     private String nombre_pariente;
     
-    @Size(max = 100)
+    @Size(max = 50)
     private String direccion_pariente;
     
-    @Size(max = 30)
+    @Size(max = 20)
     private String telefono_pariente;
     
+    
+    private float valor_otros_ingresos;
+    
     @ManyToMany
-    @JoinTable(name = "codeudor_referencias_comerciales", joinColumns =  @JoinColumn(name = "codeudor_id"), inverseJoinColumns = @JoinColumn(name = "referencias_comerciales_id"))
+    @JoinTable(name = "cliente_referencias_comerciales", joinColumns =  @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "referencias_comerciales_id"))
     @Column(nullable = false)
     private Set<ReferenciasComerciales> referencias_comerciales = new HashSet<>();
     
     
     @ManyToMany
-    @JoinTable(name = "codeudor_referencias_personales", joinColumns =  @JoinColumn(name = "codeudor_id"), inverseJoinColumns = @JoinColumn(name = "referencias_personales_id"))
+    @JoinTable(name = "cliente_referencias_personales", joinColumns =  @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "referencias_personales_id"))
     private Set<ReferenciasPersonales> referencias_personales = new HashSet<>();
 
+    
     public Codeudor() {
-    }
-
-    public Codeudor(String nombres, String apellidos, String cedula, String estado_civil, String direccion, String telefono, String celular, String email, String empresa, String cargo, String tiempo_servicio, float salario, String otros_ingresos, String tipo_casa, String propietario, String direccion_casa, String telefono_casa, String nombre_conyuge, String trabajo_conyuge, String direccion_trabajo_conyuge, String telefono_trabajo_conyuge, String nombre_pariente, String direccion_pariente, String telefono_pariente) {
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.cedula = cedula;
-        this.estado_civil = estado_civil;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.celular = celular;
-        this.email = email;
-        this.empresa = empresa;
-        this.cargo = cargo;
-        this.tiempo_servicio = tiempo_servicio;
-        this.salario = salario;
-        this.otros_ingresos = otros_ingresos;
-        this.tipo_casa = tipo_casa;
-        this.propietario = propietario;
-        this.direccion_casa = direccion_casa;
-        this.telefono_casa = telefono_casa;
-        this.nombre_conyuge = nombre_conyuge;
-        this.trabajo_conyuge = trabajo_conyuge;
-        this.direccion_trabajo_conyuge = direccion_trabajo_conyuge;
-        this.telefono_trabajo_conyuge = telefono_trabajo_conyuge;
-        this.nombre_pariente = nombre_pariente;
-        this.direccion_pariente = direccion_pariente;
-        this.telefono_pariente = telefono_pariente;
     }
 
     public Long getId() {
@@ -178,13 +179,39 @@ public class Codeudor {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getDireccion_empresa() {
+        return direccion_empresa;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setDireccion_empresa(String direccion_empresa) {
+        this.direccion_empresa = direccion_empresa;
     }
+
+    public float getValor_otros_ingresos() {
+        return valor_otros_ingresos;
+    }
+
+    public void setValor_otros_ingresos(float valor_otros_ingresos) {
+        this.valor_otros_ingresos = valor_otros_ingresos;
+    }
+
+    public Set<ReferenciasComerciales> getReferencias_comerciales() {
+        return referencias_comerciales;
+    }
+
+    public void setReferencias_comerciales(Set<ReferenciasComerciales> referencias_comerciales) {
+        this.referencias_comerciales = referencias_comerciales;
+    }
+
+    public Set<ReferenciasPersonales> getReferencias_personales() {
+        return referencias_personales;
+    }
+
+    public void setReferencias_personales(Set<ReferenciasPersonales> referencias_personales) {
+        this.referencias_personales = referencias_personales;
+    }
+
+   
 
     public String getCelular() {
         return celular;
@@ -205,6 +232,16 @@ public class Codeudor {
     public String getEmpresa() {
         return empresa;
     }
+
+    public float getValor_alquiler() {
+        return valor_alquiler;
+    }
+
+    public void setValor_alquiler(float valor_alquiler) {
+        this.valor_alquiler = valor_alquiler;
+    }
+    
+        
 
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
@@ -329,8 +366,6 @@ public class Codeudor {
     public void setTelefono_pariente(String telefono_pariente) {
         this.telefono_pariente = telefono_pariente;
     }
-
-
     
     
     

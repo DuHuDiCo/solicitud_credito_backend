@@ -33,7 +33,7 @@ public class Archivo implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    @Column(name = "ruta", nullable = false)
+    @Column(name = "fecha", nullable = false)
     private Date fecha;
     
     

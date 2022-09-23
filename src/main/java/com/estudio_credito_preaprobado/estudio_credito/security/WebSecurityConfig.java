@@ -6,6 +6,7 @@ import com.estudio_credito_preaprobado.estudio_credito.security.service.UserDeta
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -48,18 +49,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Override
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.cors().and().csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(authEntryPointJwt).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+//                .antMatchers("/api/test/**", "/api/solicitud-cliente").permitAll()
+//                .anyRequest().authenticated();
+//        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//    }
+    
+    
+     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(authEntryPointJwt).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/test/**").permitAll()
-                .anyRequest().authenticated();
+        http.csrf().disable().cors().disable().authorizeRequests()
+                .antMatchers("/api/auth/**","/api/solicitud-cliente").permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .anyRequest().authenticated()
+                .and().exceptionHandling()
+                .authenticationEntryPoint(authEntryPointJwt)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
-    
     
 
 }

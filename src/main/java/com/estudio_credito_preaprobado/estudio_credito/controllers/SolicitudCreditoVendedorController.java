@@ -5,9 +5,8 @@ import com.estudio_credito_preaprobado.estudio_credito.models.SolicitudCredito;
 import com.estudio_credito_preaprobado.estudio_credito.models.Venta;
 import com.estudio_credito_preaprobado.estudio_credito.services.SolicitudCreditoService;
 import com.estudio_credito_preaprobado.estudio_credito.services.VentaService;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/solicitud")
-public class SolicitudCreditoController {
+@RequestMapping("/api/solicitud-vendedor")
+public class SolicitudCreditoVendedorController {
     
     
     @Autowired
@@ -32,10 +31,10 @@ public class SolicitudCreditoController {
     
     
     @PostMapping("/")
-    public ResponseEntity<?> crearNuevaSolicitudCredito(@RequestBody List<Venta> solicitud){
+    public ResponseEntity<?> crearNuevaSolicitudCreditoVendedor(@RequestBody List<Venta> solicitud){
        
         
-        Set<Venta> ventas = new HashSet<>();
+        List<Venta> ventas = new ArrayList<>();
         System.out.println(solicitud.size());
         
         

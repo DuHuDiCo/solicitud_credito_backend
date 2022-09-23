@@ -1,7 +1,9 @@
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,32 +14,41 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class SolicitudCredito {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    
+    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     private Cliente cliente;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     private Codeudor codeudor;
+    
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "documentos_id", referencedColumnName = "id")
+    private Documentos documentos;
+    
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "solicitud_credito_ventas", joinColumns = @JoinColumn(name = "solicitud_credito_id"), inverseJoinColumns = @JoinColumn(name = "ventas_id"))
     @Column(nullable = true)
-    private Set<Venta> ventas = new HashSet<>();
+    private List<Venta> ventas = new ArrayList<>();
+    
+    
     
     
     @ManyToMany(fetch = FetchType.LAZY)
     @Column(nullable = true)
-    private Set<ReferenciasComerciales> referenciasComerciales = new HashSet<>();
+    private List<ReferenciasComerciales> referenciasComerciales = new ArrayList<>();
     
     @ManyToMany(fetch = FetchType.LAZY)
     @Column(nullable = true)
-    private Set<ReferenciasPersonales> referenciasPersonales = new HashSet<>();
+    private List<ReferenciasPersonales> referenciasPersonales = new ArrayList<>();
 
     public SolicitudCredito() {
     }
@@ -58,15 +69,15 @@ public class SolicitudCredito {
         this.cliente = cliente;
     }
 
-    public Set<Venta> getVentas() {
+    public List<Venta> getVentas() {
         return ventas;
     }
 
-    public void setVentas(Set<Venta> ventas) {
+    public void setVentas(List<Venta> ventas) {
         this.ventas = ventas;
     }
 
-    public Set<ReferenciasComerciales> getReferenciasComerciales() {
+    public List<ReferenciasComerciales> getReferenciasComerciales() {
         return referenciasComerciales;
     }
 
@@ -78,16 +89,26 @@ public class SolicitudCredito {
         this.codeudor = codeudor;
     }
 
-    public void setReferenciasComerciales(Set<ReferenciasComerciales> referenciasComerciales) {
+    public void setReferenciasComerciales(List<ReferenciasComerciales> referenciasComerciales) {
         this.referenciasComerciales = referenciasComerciales;
     }
 
-    public Set<ReferenciasPersonales> getReferenciasPersonales() {
+    public List<ReferenciasPersonales> getReferenciasPersonales() {
         return referenciasPersonales;
     }
 
-    public void setReferenciasPersonales(Set<ReferenciasPersonales> referenciasPersonales) {
+    public void setReferenciasPersonales(List<ReferenciasPersonales> referenciasPersonales) {
         this.referenciasPersonales = referenciasPersonales;
     }
+
+    public Documentos getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(Documentos documentos) {
+        this.documentos = documentos;
+    }
+    
+    
 
 }

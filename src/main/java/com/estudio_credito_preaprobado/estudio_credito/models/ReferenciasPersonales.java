@@ -1,5 +1,6 @@
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

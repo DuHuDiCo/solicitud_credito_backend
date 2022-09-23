@@ -1,6 +1,7 @@
 
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,8 +13,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "roles")
-public class Rol {
-    
+public class Rol implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

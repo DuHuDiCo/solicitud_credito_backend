@@ -21,5 +21,11 @@ public class SolicitudCreditoService {
     public List<SolicitudCredito> obtenerTodasSolicitudes(){
         return solicitudCreditoRepository.findAll();
     }
+    
+    public SolicitudCredito obtenerSolicitudById(Long solicitudId){
+        return solicitudCreditoRepository.findById(solicitudId).orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
+    }
+    
+    
 
 }
