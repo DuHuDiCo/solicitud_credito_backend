@@ -44,7 +44,7 @@ public class SaveFIles {
         
         Resource f = fileService.load(file.getNombre());
         
-        String url = f.getURI().toString();
+        String url = f.getURL().toString();
         file.setRuta(url);
         
         
