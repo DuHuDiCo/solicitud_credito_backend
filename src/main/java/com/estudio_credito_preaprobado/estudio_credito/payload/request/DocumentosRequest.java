@@ -9,10 +9,6 @@ import com.estudio_credito_preaprobado.estudio_credito.models.Foto;
 
 public class DocumentosRequest {
 
-    private CedulaRequest cedula_ciudadania_codeudor;
-    
-    
-    private CedulaRequest cedula_ciudadania_comprador;
     
     private DataCredito dataCredito;
     
@@ -23,21 +19,7 @@ public class DocumentosRequest {
     public DocumentosRequest() {
     }
 
-    public CedulaRequest getCedula_ciudadania_codeudor() {
-        return cedula_ciudadania_codeudor;
-    }
-
-    public void setCedula_ciudadania_codeudor(CedulaRequest cedula_ciudadania_codeudor) {
-        this.cedula_ciudadania_codeudor = cedula_ciudadania_codeudor;
-    }
-
-    public CedulaRequest getCedula_ciudadania_comprador() {
-        return cedula_ciudadania_comprador;
-    }
-
-    public void setCedula_ciudadania_comprador(CedulaRequest cedula_ciudadania_comprador) {
-        this.cedula_ciudadania_comprador = cedula_ciudadania_comprador;
-    }
+   
 
     
 

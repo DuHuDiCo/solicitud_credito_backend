@@ -1,23 +1,24 @@
-
 package com.estudio_credito_preaprobado.estudio_credito.controllers;
 
+import com.estudio_credito_preaprobado.estudio_credito.exceptions.SolicitudNotFoundException;
 import com.estudio_credito_preaprobado.estudio_credito.models.Archivo;
-import com.estudio_credito_preaprobado.estudio_credito.models.CedulaCiudadania;
+import com.estudio_credito_preaprobado.estudio_credito.models.CedulaCiudadaniaCliente;
+import com.estudio_credito_preaprobado.estudio_credito.models.CedulaCiudadaniaCodeudor;
+import com.estudio_credito_preaprobado.estudio_credito.models.Cliente;
+import com.estudio_credito_preaprobado.estudio_credito.models.Codeudor;
 import com.estudio_credito_preaprobado.estudio_credito.models.DataCredito;
 import com.estudio_credito_preaprobado.estudio_credito.models.DatosPersonales;
 import com.estudio_credito_preaprobado.estudio_credito.models.Documentos;
 import com.estudio_credito_preaprobado.estudio_credito.models.Foto;
 import com.estudio_credito_preaprobado.estudio_credito.models.ReferenciasComerciales;
+import com.estudio_credito_preaprobado.estudio_credito.models.ReferenciasPersonales;
 import com.estudio_credito_preaprobado.estudio_credito.models.SolicitudCredito;
-import com.estudio_credito_preaprobado.estudio_credito.payload.request.CedulaRequest;
 import com.estudio_credito_preaprobado.estudio_credito.payload.request.DocumentosRequest;
-import com.estudio_credito_preaprobado.estudio_credito.payload.request.ReferenciasComercialesRequest;
 import com.estudio_credito_preaprobado.estudio_credito.payload.request.SolicitudCreditoClienteRequest;
 import com.estudio_credito_preaprobado.estudio_credito.services.SolicitudCreditoService;
 import com.estudio_credito_preaprobado.estudio_credito.utils.Funciones;
 import com.estudio_credito_preaprobado.estudio_credito.utils.SaveFIles;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,60 +34,107 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/solicitud-cliente")
 public class SolicitudCreditoClienteController {
-    
-    
+
     @Autowired
     private SolicitudCreditoService solicitudCreditoService;
-    
+
     @Autowired
     private SaveFIles Sfiles;
-    
+
+
     @PostMapping("/")
-    public ResponseEntity<?> crearSolicitudCreditoCliente(@RequestBody SolicitudCreditoClienteRequest solicitudCredito) throws Exception{
-          
+    public ResponseEntity<SolicitudCredito> crearSolicitudCreditoCliente(@RequestBody SolicitudCreditoClienteRequest solicitudCredito) throws Exception, SolicitudNotFoundException {
+
         //recuperamos la solicitud de credito creada poor el vendedor
         SolicitudCredito solicitud = solicitudCreditoService.obtenerSolicitudById(solicitudCredito.getId());
-        // a esa solicitud recuperada le enviamos los datos del cliente 
-        solicitud.setCliente(solicitudCredito.getCliente());
-        //le enviamos los datos del codeudor
-        solicitud.setCodeudor(solicitudCredito.getCodeudor());
-//        
+
+        //---------CLIENTE--------------
+        //recuperamos los datos del cliente
+        Cliente cliente = solicitudCredito.getCliente();
+
+        //guardamos la cedula del cliente
+        CedulaCiudadaniaCliente cedCli = cliente.getCedula_ciudadania_cliente();
+        Archivo frente_cedula_cliente = Sfiles.guardarCedula(cedCli.getFrente_cedula());
+        cedCli.setFrente_cedula(frente_cedula_cliente.getRuta());
+        Archivo respaldo_cedula__cliente = Sfiles.guardarCedula(cedCli.getRespaldo_cedula());
+        cedCli.setRespaldo_cedula(respaldo_cedula__cliente.getRuta());
+        //enviamos la cedula ya guardada el cliente recuperado
+        cliente.setCedula_ciudadania_cliente(cedCli);
+        //enviamos el cliente a la solicitud recuperada
+        solicitud.setCliente(cliente);
+
+        //----------CLIENTE REFERENCIAS ----------
+        List<ReferenciasComerciales> rcrcom = solicitudCredito.getReferencias_comerciales().getReferencias_comerciales_comprador();
+        List<ReferenciasPersonales> rprcom = solicitudCredito.getReferencias_personales().getReferencias_personales_comprador();
+        List<ReferenciasComerciales> referencias_comerciles_cliente = new ArrayList<>();
+        List<ReferenciasPersonales> referencias_personales_cliente = new ArrayList<>();
+        rcrcom.forEach(ref -> {
+            ReferenciasComerciales refCom = new ReferenciasComerciales();
+            refCom.setNombre(ref.getNombre());
+            refCom.setTelefono(ref.getTelefono());
+            referencias_comerciles_cliente.add(refCom);
+        });
+        rprcom.forEach(ref -> {
+            ReferenciasPersonales refPer = new ReferenciasPersonales();
+            refPer.setNombre(ref.getNombre());
+            refPer.setTelefono(ref.getTelefono());
+            referencias_personales_cliente.add(refPer);
+        });
+
+        //enviamos las referencias al cliente recuperado
+        cliente.setReferencias_comerciales(referencias_comerciles_cliente);
+        cliente.setReferencias_personales(referencias_personales_cliente);
+
+        //---------CODEUDOR--------------
+        Codeudor codeudor = solicitudCredito.getCodeudor();
+        //guardamos la cedula del codeudor
+        CedulaCiudadaniaCodeudor cedCod = codeudor.getCedula_ciudadania_codeudor();
+        Archivo frente_cedula_codeudor = Sfiles.guardarCedula(cedCod.getFrente_cedula());
+        cedCod.setFrente_cedula(frente_cedula_codeudor.getRuta());
+        Archivo respaldo_cedula_codeudor = Sfiles.guardarCedula(cedCod.getRespaldo_cedula());
+        cedCod.setRespaldo_cedula(respaldo_cedula_codeudor.getRuta());
+        //enviamos la cedula ya guardada al codeudor recoperado
+        codeudor.setCedula_ciudadania_codeudor(cedCod);
+        //enviamos el codeudor a la solicitud recuperada
+        solicitud.setCodeudor(codeudor);
+
+        //----------CODEUDOR REFERENCIAS----------
+        List<ReferenciasComerciales> rcrcod = solicitudCredito.getReferencias_comerciales().getReferencias_comerciales_codeudor();
+        List<ReferenciasPersonales> rprcod = solicitudCredito.getReferencias_personales().getReferencias_personales_codeudor();
+        Set<ReferenciasComerciales> referencias_comerciles_codeudor = new HashSet<>();
+        Set<ReferenciasPersonales> referencias_personales_codeudor = new HashSet<>();
+        rcrcod.forEach(ref -> {
+            ReferenciasComerciales refCom = new ReferenciasComerciales();
+            refCom.setNombre(ref.getNombre());
+            refCom.setTelefono(ref.getTelefono());
+            referencias_comerciles_codeudor.add(refCom);
+        });
+        rprcod.forEach(ref -> {
+            ReferenciasPersonales refPer = new ReferenciasPersonales();
+            refPer.setNombre(ref.getNombre());
+            refPer.setTelefono(ref.getTelefono());
+            referencias_personales_codeudor.add(refPer);
+        });
+        
+        
+        //enviamos las referencias al cliente recuperado
+        codeudor.setReferencias_comerciales(referencias_comerciles_codeudor);
+        codeudor.setReferencias_personales(referencias_personales_codeudor);
+
+        //--------------------DOCUMENTOS--------------        
+        
         //obtenemos los documentos enviados en la peticion
         DocumentosRequest docR = solicitudCredito.getDocumentos();
-        //obtenemos la cedula del comprador
-        CedulaRequest cdcom = docR.getCedula_ciudadania_comprador();
-        //guardamos la cedula del comprador
-        Archivo frente_cedula_comprador = Sfiles.guardarCedula(cdcom.getFrente_cedula());
-        Archivo respaldo_cedula_comprador = Sfiles.guardarCedula(cdcom.getRespaldo_cedula());
-        //obtenemos la cedula del codeudor
-        CedulaRequest cdcod = docR.getCedula_ciudadania_codeudor();
-        //guardamos la cedula del codeudor
-        Archivo frente_cedula_codeudor = Sfiles.guardarCedula(cdcod.getFrente_cedula());
-        Archivo respaldo_cedula_codeudor = Sfiles.guardarCedula(cdcod.getRespaldo_cedula());
-        
-        //creamos las nuevas cedulas para la base de datos
-        CedulaCiudadania cedula_comprador = new CedulaCiudadania();
-        cedula_comprador.setFrenteCedula(frente_cedula_comprador.getRuta());
-        cedula_comprador.setRespaldoCedula(respaldo_cedula_comprador.getRuta());
-        
-        CedulaCiudadania cedula_codeudor = new CedulaCiudadania();
-        cedula_codeudor.setFrenteCedula(frente_cedula_codeudor.getRuta());
-        cedula_codeudor.setRespaldoCedula(respaldo_cedula_codeudor.getRuta());
-        
-        //agregamos las cedulas la lista de cedulas
-        Set<CedulaCiudadania> cedulas = new HashSet<>();
-        cedulas.add(cedula_comprador);
-        cedulas.add(cedula_codeudor);
-        
+
         //guardamos la foto del comprador 
         Foto foto = docR.getFoto();
         Archivo foto_converted = Sfiles.guardarCedula(foto.getFoto());
         Foto newFoto = new Foto();
         newFoto.setFoto(foto_converted.getRuta());
-        
+
         //creamos el nuevo conjunto de documentos para la solicitud
         Documentos docsNuevos = new Documentos();
-        docsNuevos.setCedulasCiudadania(cedulas);
+
         DataCredito dc = docR.getDataCredito();
         dc.setFecha(Funciones.obtenerLocalDateTime());
         docsNuevos.setDataCredito(dc);
@@ -94,25 +142,17 @@ public class SolicitudCreditoClienteController {
         dp.setFecha(Funciones.obtenerLocalDateTime());
         docsNuevos.setDatosPersonales(dp);
         docsNuevos.setFoto(newFoto);
-        
+
         //enviamos el nuevo conjunto de documentos a la solicitud recuperada
         solicitud.setDocumentos(docsNuevos);
+
+        //--------------GUARDAR BASE DE DATOS--------------------      
+        SolicitudCredito sc = solicitudCreditoService.crearSolicitudCredito(solicitud);
+
+
         
-        //obtenemos las referencias comerciales del comprador
-        ReferenciasComercialesRequest rcr = solicitudCredito.getReferencias_comerciales();
-        List<ReferenciasComerciales> referencias_comprador = rcr.getReferencias_comerciales_comprador();
-        List<ReferenciasComerciales> referencias_codeudor = rcr.getReferencias_comerciales_codeudor();
-        List<ReferenciasComerciales> referencias_comerciales = new ArrayList<>();
-        referencias_comprador.forEach(rc -> {
-            referencias_comerciales.add(rc);
-        });
-        
-        
-       
-       
-        
-        
-        return ResponseEntity.ok(solicitudCredito);
+        return ResponseEntity.ok(sc);
+
     }
 
 }

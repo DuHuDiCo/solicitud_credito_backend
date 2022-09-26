@@ -42,13 +42,6 @@ public class SolicitudCredito {
     
     
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    @Column(nullable = true)
-    private List<ReferenciasComerciales> referenciasComerciales = new ArrayList<>();
-    
-    @ManyToMany(fetch = FetchType.LAZY)
-    @Column(nullable = true)
-    private List<ReferenciasPersonales> referenciasPersonales = new ArrayList<>();
 
     public SolicitudCredito() {
     }
@@ -77,9 +70,7 @@ public class SolicitudCredito {
         this.ventas = ventas;
     }
 
-    public List<ReferenciasComerciales> getReferenciasComerciales() {
-        return referenciasComerciales;
-    }
+   
 
     public Codeudor getCodeudor() {
         return codeudor;
@@ -89,17 +80,6 @@ public class SolicitudCredito {
         this.codeudor = codeudor;
     }
 
-    public void setReferenciasComerciales(List<ReferenciasComerciales> referenciasComerciales) {
-        this.referenciasComerciales = referenciasComerciales;
-    }
-
-    public List<ReferenciasPersonales> getReferenciasPersonales() {
-        return referenciasPersonales;
-    }
-
-    public void setReferenciasPersonales(List<ReferenciasPersonales> referenciasPersonales) {
-        this.referenciasPersonales = referenciasPersonales;
-    }
 
     public Documentos getDocumentos() {
         return documentos;

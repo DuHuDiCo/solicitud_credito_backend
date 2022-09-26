@@ -42,6 +42,8 @@ public class SolicitudCreditoClienteRequest {
         this.cliente = cliente;
     }
 
+    
+
     public Codeudor getCodeudor() {
         return codeudor;
     }

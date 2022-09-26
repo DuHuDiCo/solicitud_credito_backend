@@ -1,6 +1,7 @@
 
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,23 +9,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cedula_ciudadania")
-public class CedulaCiudadania {
+@Table(name = "cedula_ciudadania_codeudor")
+public class CedulaCiudadaniaCodeudor {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     
     
     
     private String frente_cedula;
     
-    private String propietario;
+    
     
     private String respaldo_cedula;
     
     
 
-    public CedulaCiudadania() {
+    public CedulaCiudadaniaCodeudor() {
     }
 
     public Long getId() {
@@ -35,31 +38,23 @@ public class CedulaCiudadania {
         this.id = id;
     }
 
-    public String getFrenteCedula() {
+    public String getFrente_cedula() {
         return frente_cedula;
     }
 
-    public void setFrenteCedula(String frenteCedula) {
-        this.frente_cedula = frenteCedula;
+    public void setFrente_cedula(String frente_cedula) {
+        this.frente_cedula = frente_cedula;
     }
 
-    public String getPropietario() {
-        return propietario;
-    }
-
-    public void setPropietario(String propietario) {
-        this.propietario = propietario;
-    }
-    
-    
-
-    public String getRespaldoCedula() {
+    public String getRespaldo_cedula() {
         return respaldo_cedula;
     }
 
-    public void setRespaldoCedula(String respaldoCedula) {
-        this.respaldo_cedula = respaldoCedula;
+    public void setRespaldo_cedula(String respaldo_cedula) {
+        this.respaldo_cedula = respaldo_cedula;
     }
+
+   
     
     
 

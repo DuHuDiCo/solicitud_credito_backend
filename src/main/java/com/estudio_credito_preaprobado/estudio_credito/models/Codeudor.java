@@ -3,17 +3,22 @@ package com.estudio_credito_preaprobado.estudio_credito.models;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(name = "codeudor")
 public class Codeudor {
     
     @Id
@@ -116,15 +121,19 @@ public class Codeudor {
     
     private float valor_otros_ingresos;
     
-    @ManyToMany
-    @JoinTable(name = "cliente_referencias_comerciales", joinColumns =  @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "referencias_comerciales_id"))
+    @ManyToMany( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "codeudor_referencias_comerciales", joinColumns =  @JoinColumn(name = "codeudor_id"), inverseJoinColumns = @JoinColumn(name = "referencias_comerciales_id"))
     @Column(nullable = false)
     private Set<ReferenciasComerciales> referencias_comerciales = new HashSet<>();
     
     
-    @ManyToMany
-    @JoinTable(name = "cliente_referencias_personales", joinColumns =  @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "referencias_personales_id"))
+    @ManyToMany( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "codeudor_referencias_personales", joinColumns =  @JoinColumn(name = "codeudor_id"), inverseJoinColumns = @JoinColumn(name = "referencias_personales_id"))
     private Set<ReferenciasPersonales> referencias_personales = new HashSet<>();
+    
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "cedula_id", referencedColumnName = "id")
+    private CedulaCiudadaniaCodeudor cedula_ciudadania_codeudor;
 
     
     public Codeudor() {
@@ -190,6 +199,19 @@ public class Codeudor {
         return valor_otros_ingresos;
     }
 
+    public CedulaCiudadaniaCodeudor getCedula_ciudadania_codeudor() {
+        return cedula_ciudadania_codeudor;
+    }
+
+    public void setCedula_ciudadania_codeudor(CedulaCiudadaniaCodeudor cedula_ciudadania_codeudor) {
+        this.cedula_ciudadania_codeudor = cedula_ciudadania_codeudor;
+    }
+
+   
+
+    
+
+    
     public void setValor_otros_ingresos(float valor_otros_ingresos) {
         this.valor_otros_ingresos = valor_otros_ingresos;
     }

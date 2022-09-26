@@ -1,16 +1,19 @@
 
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -114,15 +117,21 @@ public class Cliente  {
     
     private float valor_otros_ingresos;
     
-    @ManyToMany
+    @ManyToMany( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "cliente_referencias_comerciales", joinColumns =  @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "referencias_comerciales_id"))
-    @Column(nullable = false)
-    private Set<ReferenciasComerciales> referencias_comerciales = new HashSet<>();
+    private List<ReferenciasComerciales> referencias_comerciales = new ArrayList<>();
     
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade  = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "cliente_referencias_personales", joinColumns =  @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "referencias_personales_id"))
-    private Set<ReferenciasPersonales> referencias_personales = new HashSet<>();
+    private List<ReferenciasPersonales> referencias_personales = new ArrayList<>();
+    
+    
+    
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "cedula_id", referencedColumnName = "id")
+    private CedulaCiudadaniaCliente cedula_ciudadania_cliente;
 
     
     public Cliente() {
@@ -168,6 +177,18 @@ public class Cliente  {
         this.estado_civil = estado_civil;
     }
 
+    public CedulaCiudadaniaCliente getCedula_ciudadania_cliente() {
+        return cedula_ciudadania_cliente;
+    }
+
+    public void setCedula_ciudadania_cliente(CedulaCiudadaniaCliente cedula_ciudadania_cliente) {
+        this.cedula_ciudadania_cliente = cedula_ciudadania_cliente;
+    }
+
+    
+    
+    
+
     public String getDireccion() {
         return direccion;
     }
@@ -192,19 +213,19 @@ public class Cliente  {
         this.valor_otros_ingresos = valor_otros_ingresos;
     }
 
-    public Set<ReferenciasComerciales> getReferencias_comerciales() {
+    public List<ReferenciasComerciales> getReferencias_comerciales() {
         return referencias_comerciales;
     }
 
-    public void setReferencias_comerciales(Set<ReferenciasComerciales> referencias_comerciales) {
+    public void setReferencias_comerciales(List<ReferenciasComerciales> referencias_comerciales) {
         this.referencias_comerciales = referencias_comerciales;
     }
 
-    public Set<ReferenciasPersonales> getReferencias_personales() {
+    public List<ReferenciasPersonales> getReferencias_personales() {
         return referencias_personales;
     }
 
-    public void setReferencias_personales(Set<ReferenciasPersonales> referencias_personales) {
+    public void setReferencias_personales(List<ReferenciasPersonales> referencias_personales) {
         this.referencias_personales = referencias_personales;
     }
 

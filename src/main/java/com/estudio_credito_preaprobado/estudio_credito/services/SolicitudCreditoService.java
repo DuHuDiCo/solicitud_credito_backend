@@ -26,6 +26,8 @@ public class SolicitudCreditoService {
         return solicitudCreditoRepository.findById(solicitudId).orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
     }
     
+   
+    
     
 
 }
