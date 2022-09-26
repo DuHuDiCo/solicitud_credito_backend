@@ -3,8 +3,6 @@ package com.estudio_credito_preaprobado.estudio_credito.payload.request;
 
 import com.estudio_credito_preaprobado.estudio_credito.models.Cliente;
 import com.estudio_credito_preaprobado.estudio_credito.models.Codeudor;
-import com.estudio_credito_preaprobado.estudio_credito.models.Documentos;
-import com.estudio_credito_preaprobado.estudio_credito.models.Referencias;
 
 
 
@@ -18,10 +16,12 @@ public class SolicitudCreditoClienteRequest {
     
     private Codeudor codeudor;
    
-    private Documentos documentos;
+    private DocumentosRequest documentos;
   
-       
-    private Referencias referencias;
+    private ReferenciasComercialesRequest referencias_comerciales;
+    
+    private ReferenciasPersonalesRequest referencias_personales;
+    
 
     public SolicitudCreditoClienteRequest() {
     }
@@ -50,21 +50,32 @@ public class SolicitudCreditoClienteRequest {
         this.codeudor = codeudor;
     }
 
-    public Documentos getDocumentos() {
+    public DocumentosRequest getDocumentos() {
         return documentos;
     }
 
-    public void setDocumentos(Documentos documentos) {
+    public void setDocumentos(DocumentosRequest documentos) {
         this.documentos = documentos;
     }
 
-    public Referencias getReferencias() {
-        return referencias;
+    public ReferenciasComercialesRequest getReferencias_comerciales() {
+        return referencias_comerciales;
     }
 
-    public void setReferencias(Referencias referencias) {
-        this.referencias = referencias;
+    public void setReferencias_comerciales(ReferenciasComercialesRequest referencias_comerciales) {
+        this.referencias_comerciales = referencias_comerciales;
     }
+
+    public ReferenciasPersonalesRequest getReferencias_personales() {
+        return referencias_personales;
+    }
+
+    public void setReferencias_personales(ReferenciasPersonalesRequest referencias_personales) {
+        this.referencias_personales = referencias_personales;
+    }
+    
+    
+     
     
     
 

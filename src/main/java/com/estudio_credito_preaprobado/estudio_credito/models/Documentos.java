@@ -1,8 +1,9 @@
 
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,7 +30,7 @@ public class Documentos {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "documentos_cedulas", joinColumns = @JoinColumn(name = "documentos_id"), inverseJoinColumns = @JoinColumn(name = "cedulas_id"))
     @Column(nullable = true)
-    private Set<CedulaCiudadania> cedulasCiudadania = new HashSet<>();
+    private Set<CedulaCiudadania> cedula_ciudadania = new HashSet<>();
     
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -60,11 +61,11 @@ public class Documentos {
     }
 
     public Set<CedulaCiudadania> getCedulasCiudadania() {
-        return cedulasCiudadania;
+        return cedula_ciudadania;
     }
 
     public void setCedulasCiudadania(Set<CedulaCiudadania> cedulasCiudadania) {
-        this.cedulasCiudadania = cedulasCiudadania;
+        this.cedula_ciudadania = cedulasCiudadania;
     }
 
     public DataCredito getDataCredito() {

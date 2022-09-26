@@ -86,8 +86,6 @@ public class Cliente  {
     @Size(max = 100)
     private String propietario;
     
-    @Size(max = 100)
-    private String direccion_casa;
     
     @Size(max = 50)
     private String telefono_casa;
@@ -294,13 +292,7 @@ public class Cliente  {
         this.propietario = propietario;
     }
 
-    public String getDireccion_casa() {
-        return direccion_casa;
-    }
-
-    public void setDireccion_casa(String direccion_casa) {
-        this.direccion_casa = direccion_casa;
-    }
+    
 
     public String getTelefono_casa() {
         return telefono_casa;

@@ -1,7 +1,6 @@
 
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,11 +16,13 @@ public class CedulaCiudadania {
     
     
     
-    private String frenteCedula;
-    
-    private String respaldoCedula;
+    private String frente_cedula;
     
     private String propietario;
+    
+    private String respaldo_cedula;
+    
+    
 
     public CedulaCiudadania() {
     }
@@ -35,11 +36,11 @@ public class CedulaCiudadania {
     }
 
     public String getFrenteCedula() {
-        return frenteCedula;
+        return frente_cedula;
     }
 
     public void setFrenteCedula(String frenteCedula) {
-        this.frenteCedula = frenteCedula;
+        this.frente_cedula = frenteCedula;
     }
 
     public String getPropietario() {
@@ -53,11 +54,11 @@ public class CedulaCiudadania {
     
 
     public String getRespaldoCedula() {
-        return respaldoCedula;
+        return respaldo_cedula;
     }
 
     public void setRespaldoCedula(String respaldoCedula) {
-        this.respaldoCedula = respaldoCedula;
+        this.respaldo_cedula = respaldoCedula;
     }
     
     
