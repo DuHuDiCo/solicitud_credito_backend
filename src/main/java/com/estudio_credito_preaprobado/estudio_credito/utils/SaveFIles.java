@@ -4,6 +4,13 @@ package com.estudio_credito_preaprobado.estudio_credito.utils;
 import com.estudio_credito_preaprobado.estudio_credito.models.Archivo;
 import com.estudio_credito_preaprobado.estudio_credito.services.CustomMultipartFile;
 import com.estudio_credito_preaprobado.estudio_credito.services.FileService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.tomcat.util.codec.binary.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -50,6 +57,21 @@ public class SaveFIles {
         
         return file;
         
+    }
+    
+    
+    public Archivo imagenToBase64(String ruta) throws FileNotFoundException, IOException{
+        File img = new File(ruta);
+        Base64 base64 = new Base64();
+        byte[] imageBytes = new byte[(int)img.length()];
+        InputStream inputStream = new FileInputStream(img);
+        inputStream.read(imageBytes);
+        String encodedFile = base64.encodeToString(imageBytes);
+        Archivo file = new Archivo();
+        file.setNombre(img.getName());
+        file.setRuta(encodedFile);
+        
+        return file;
     }
 
 }

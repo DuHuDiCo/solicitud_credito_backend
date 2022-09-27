@@ -107,6 +107,12 @@ public class AuthController {
                                 .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado"));
                         roles.add(adminRol);
                         break;
+                    case "analista":
+                        Rol analistaRol = rolRepository.findByNombre(ERol.ROL_ANALISTA)
+                                .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado"));
+                        roles.add(analistaRol);
+                        
+                        break;
                     case "mod":
                         Rol modRol = rolRepository.findByNombre(ERol.ROL_MODERADOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Rol no encontrado"));

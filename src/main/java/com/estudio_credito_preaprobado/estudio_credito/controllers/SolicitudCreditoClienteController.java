@@ -90,9 +90,9 @@ public class SolicitudCreditoClienteController {
         //guardamos la cedula del codeudor
         CedulaCiudadaniaCodeudor cedCod = codeudor.getCedula_ciudadania_codeudor();
         Archivo frente_cedula_codeudor = Sfiles.guardarCedula(cedCod.getFrente_cedula());
-        cedCod.setFrente_cedula(frente_cedula_codeudor.getRuta());
+        cedCod.setFrente_cedula(frente_cedula_codeudor.getNombre());
         Archivo respaldo_cedula_codeudor = Sfiles.guardarCedula(cedCod.getRespaldo_cedula());
-        cedCod.setRespaldo_cedula(respaldo_cedula_codeudor.getRuta());
+        cedCod.setRespaldo_cedula(respaldo_cedula_codeudor.getNombre());
         //enviamos la cedula ya guardada al codeudor recoperado
         codeudor.setCedula_ciudadania_codeudor(cedCod);
         //enviamos el codeudor a la solicitud recuperada
@@ -130,7 +130,7 @@ public class SolicitudCreditoClienteController {
         Foto foto = docR.getFoto();
         Archivo foto_converted = Sfiles.guardarCedula(foto.getFoto());
         Foto newFoto = new Foto();
-        newFoto.setFoto(foto_converted.getRuta());
+        newFoto.setFoto(foto_converted.getNombre());
 
         //creamos el nuevo conjunto de documentos para la solicitud
         Documentos docsNuevos = new Documentos();
@@ -145,6 +145,14 @@ public class SolicitudCreditoClienteController {
 
         //enviamos el nuevo conjunto de documentos a la solicitud recuperada
         solicitud.setDocumentos(docsNuevos);
+        
+        
+        //-------------FECHA SOLICITUD-------------------------------
+        solicitud.setFecha(Funciones.obtenerLocalDateTime());
+        
+        //----------------ESTADO SOLICITUD------------------------
+        solicitud.setEstado("EN ESTUDIO");
+        
 
         //--------------GUARDAR BASE DE DATOS--------------------      
         SolicitudCredito sc = solicitudCreditoService.crearSolicitudCredito(solicitud);

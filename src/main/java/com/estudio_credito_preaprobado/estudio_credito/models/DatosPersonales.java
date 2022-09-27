@@ -24,7 +24,8 @@ public class DatosPersonales {
     
     private Boolean autorizacion;
     
-   @Temporal(TemporalType.TIMESTAMP)
+    
+    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date fecha;
 

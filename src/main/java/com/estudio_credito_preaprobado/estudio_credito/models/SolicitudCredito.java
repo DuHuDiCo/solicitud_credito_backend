@@ -1,7 +1,7 @@
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +15,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class SolicitudCredito {
@@ -38,6 +41,15 @@ public class SolicitudCredito {
     @JoinTable(name = "solicitud_credito_ventas", joinColumns = @JoinColumn(name = "solicitud_credito_id"), inverseJoinColumns = @JoinColumn(name = "ventas_id"))
     @Column(nullable = true)
     private List<Venta> ventas = new ArrayList<>();
+    
+     
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Date fecha;
+    
+    
+    @Column(length = 20)
+    private String estado;
     
     
     
@@ -70,7 +82,24 @@ public class SolicitudCredito {
         this.ventas = ventas;
     }
 
-   
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    
+    
 
     public Codeudor getCodeudor() {
         return codeudor;

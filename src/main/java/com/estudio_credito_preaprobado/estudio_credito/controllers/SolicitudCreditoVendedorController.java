@@ -51,6 +51,7 @@ public class SolicitudCreditoVendedorController {
         System.out.println(ventas.size());
         SolicitudCredito sc = new SolicitudCredito();
         sc.setVentas(ventas);
+        sc.setEstado("CREADO");
         
         return ResponseEntity.ok(solicitudCreditoService.crearSolicitudCredito(sc));
     }

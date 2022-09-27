@@ -1,6 +1,7 @@
 
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +15,8 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-public class Documentos {
+public class Documentos implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,19 +25,19 @@ public class Documentos {
     
     
     
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "data_credito_id", referencedColumnName = "id")
     private DataCredito dataCredito;
     
     
     
-    @OneToOne(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
     @JoinColumn(name = "datos_personales_id", referencedColumnName = "id")
     private DatosPersonales datosPersonales;
     
     
      
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "foto_id", referencedColumnName = "id")
     private Foto foto;
 
