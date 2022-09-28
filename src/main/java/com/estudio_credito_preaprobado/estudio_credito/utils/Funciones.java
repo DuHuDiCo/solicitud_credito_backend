@@ -25,11 +25,13 @@ public class Funciones {
 
     }
 
-    public static Date dateToString(Date fecha) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    public static String dateToString(Date fecha) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String fechaComoCadena = sdf.format(fecha);
-        Date date = sdf.parse(fechaComoCadena);
-        return date;
+        
+        return fechaComoCadena;
     }
+    
+    
 
 }

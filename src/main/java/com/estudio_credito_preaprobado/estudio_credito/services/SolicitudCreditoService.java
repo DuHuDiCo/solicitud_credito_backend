@@ -31,6 +31,7 @@ public class SolicitudCreditoService {
         return solicitudCreditoRepository.findByEstado(estado);
     }
     
+  
    
     
     
