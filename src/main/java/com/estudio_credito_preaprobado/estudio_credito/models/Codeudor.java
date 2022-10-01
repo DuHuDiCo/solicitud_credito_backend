@@ -1,7 +1,9 @@
 package com.estudio_credito_preaprobado.estudio_credito.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -118,18 +120,23 @@ public class Codeudor {
     @Size(max = 20)
     private String telefono_pariente;
     
+     
+    @Size(max = 100000)
+    private String observaciones;
+    
+    
     
     private float valor_otros_ingresos;
     
     @ManyToMany( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "codeudor_referencias_comerciales", joinColumns =  @JoinColumn(name = "codeudor_id"), inverseJoinColumns = @JoinColumn(name = "referencias_comerciales_id"))
     @Column(nullable = false)
-    private Set<ReferenciasComerciales> referencias_comerciales = new HashSet<>();
+    private List<ReferenciasComerciales> referencias_comerciales = new ArrayList<>();
     
     
     @ManyToMany( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "codeudor_referencias_personales", joinColumns =  @JoinColumn(name = "codeudor_id"), inverseJoinColumns = @JoinColumn(name = "referencias_personales_id"))
-    private Set<ReferenciasPersonales> referencias_personales = new HashSet<>();
+    private List<ReferenciasPersonales> referencias_personales = new ArrayList<>();
     
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "cedula_id", referencedColumnName = "id")
@@ -207,8 +214,16 @@ public class Codeudor {
         this.cedula_ciudadania_codeudor = cedula_ciudadania_codeudor;
     }
 
-   
+    public String getObservaciones() {
+        return observaciones;
+    }
 
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+   
+    
     
 
     
@@ -216,19 +231,19 @@ public class Codeudor {
         this.valor_otros_ingresos = valor_otros_ingresos;
     }
 
-    public Set<ReferenciasComerciales> getReferencias_comerciales() {
+    public List<ReferenciasComerciales> getReferencias_comerciales() {
         return referencias_comerciales;
     }
 
-    public void setReferencias_comerciales(Set<ReferenciasComerciales> referencias_comerciales) {
+    public void setReferencias_comerciales(List<ReferenciasComerciales> referencias_comerciales) {
         this.referencias_comerciales = referencias_comerciales;
     }
 
-    public Set<ReferenciasPersonales> getReferencias_personales() {
+    public List<ReferenciasPersonales> getReferencias_personales() {
         return referencias_personales;
     }
 
-    public void setReferencias_personales(Set<ReferenciasPersonales> referencias_personales) {
+    public void setReferencias_personales(List<ReferenciasPersonales> referencias_personales) {
         this.referencias_personales = referencias_personales;
     }
 

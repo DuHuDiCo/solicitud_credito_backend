@@ -52,7 +52,9 @@ public class SolicitudCredito {
     private String estado;
     
     
-    
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "analisis_credito_id", referencedColumnName = "id")
+    private AnalisisCredito analisisCredito;
     
 
     public SolicitudCredito() {
@@ -117,6 +119,16 @@ public class SolicitudCredito {
     public void setDocumentos(Documentos documentos) {
         this.documentos = documentos;
     }
+
+    public AnalisisCredito getAnalisisCredito() {
+        return analisisCredito;
+    }
+
+    public void setAnalisisCredito(AnalisisCredito analisisCredito) {
+        this.analisisCredito = analisisCredito;
+    }
+    
+    
     
     
 

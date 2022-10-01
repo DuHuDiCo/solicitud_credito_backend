@@ -101,8 +101,8 @@ public class SolicitudCreditoClienteController {
         //----------CODEUDOR REFERENCIAS----------
         List<ReferenciasComerciales> rcrcod = solicitudCredito.getReferencias_comerciales().getReferencias_comerciales_codeudor();
         List<ReferenciasPersonales> rprcod = solicitudCredito.getReferencias_personales().getReferencias_personales_codeudor();
-        Set<ReferenciasComerciales> referencias_comerciles_codeudor = new HashSet<>();
-        Set<ReferenciasPersonales> referencias_personales_codeudor = new HashSet<>();
+        List<ReferenciasComerciales> referencias_comerciles_codeudor = new ArrayList<>();
+        List<ReferenciasPersonales> referencias_personales_codeudor = new ArrayList<>();
         rcrcod.forEach(ref -> {
             ReferenciasComerciales refCom = new ReferenciasComerciales();
             refCom.setNombre(ref.getNombre());

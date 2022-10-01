@@ -115,6 +115,10 @@ public class Cliente  {
     private String telefono_pariente;
     
     
+    @Size(max = 100000)
+    private String observaciones;
+    
+    
     private float valor_otros_ingresos;
     
     @ManyToMany( fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -377,6 +381,14 @@ public class Cliente  {
 
     public void setTelefono_pariente(String telefono_pariente) {
         this.telefono_pariente = telefono_pariente;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
     
     
