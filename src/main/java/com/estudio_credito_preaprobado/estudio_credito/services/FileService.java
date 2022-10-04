@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
     
-    public void save(MultipartFile file) throws Exception;
+    public String save(MultipartFile file) throws Exception;
     
     public Resource load(String name) throws Exception;
     

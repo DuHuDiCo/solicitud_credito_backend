@@ -28,8 +28,10 @@ public class FileServicesImpl implements FileService{
     
 
     @Override
-    public void save(MultipartFile file) throws Exception {
-        Files.copy(file.getInputStream(), this.rootFolder.resolve(file.getOriginalFilename()));
+    public String save(MultipartFile file) throws Exception {
+        final String  name = file.getOriginalFilename();
+        Files.copy(file.getInputStream(), this.rootFolder.resolve(name));
+        return name;
     }
 
     @Override

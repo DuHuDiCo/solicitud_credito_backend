@@ -41,16 +41,16 @@ public class SaveFIles {
         }
 
         MultipartFile multipartFile = new CustomMultipartFile(data, dataUir);
-        fileService.save(multipartFile);
+        String name = fileService.save(multipartFile);
 
         Archivo file = new Archivo();
-        file.setNombre(multipartFile.getOriginalFilename());
+        file.setNombre(name);
 
         file.setFecha(Funciones.obtenerDate());
 
         Resource f = fileService.load(file.getNombre());
 
-        String url = f.getURL().toString();
+        String url = f.getFilename();
         file.setRuta(url);
 
         return file;
