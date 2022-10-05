@@ -31,6 +31,10 @@ public class SolicitudCreditoService {
         return solicitudCreditoRepository.findByEstado(estado);
     }
     
+    public void eliminarSolicitud(Long id){
+        solicitudCreditoRepository.deleteById(id);
+    }
+    
   
    
     

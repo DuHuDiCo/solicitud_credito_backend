@@ -3,6 +3,7 @@ package com.estudio_credito_preaprobado.estudio_credito.controllers;
 
 import com.estudio_credito_preaprobado.estudio_credito.models.SolicitudCredito;
 import com.estudio_credito_preaprobado.estudio_credito.models.Venta;
+import com.estudio_credito_preaprobado.estudio_credito.payload.response.MessageResponse;
 import com.estudio_credito_preaprobado.estudio_credito.services.SolicitudCreditoService;
 import com.estudio_credito_preaprobado.estudio_credito.services.VentaService;
 import java.util.ArrayList;
@@ -10,7 +11,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +63,16 @@ public class SolicitudCreditoVendedorController {
     @GetMapping("/all")
     public List<SolicitudCredito> obtenerTodasSolicitudes(){
         
-        return solicitudCreditoService.obtenerTodasSolicitudes();
+        return solicitudCreditoService.obtenerSolicitudesByEstado("CREADO");
+    }
+    
+    
+    @GetMapping("/{solicitudId}")
+    public ResponseEntity<?> eliminarSolicitudCredito(@PathVariable("solicitudId") Long solicitudId){
+        SolicitudCredito sc = solicitudCreditoService.obtenerSolicitudById(solicitudId);
+        sc.setEstado("CANCELADO");
+        SolicitudCredito scActu = solicitudCreditoService.crearSolicitudCredito(sc);
+        return ResponseEntity.ok(new MessageResponse("Solicitud Eliminada"));
     }
     
     

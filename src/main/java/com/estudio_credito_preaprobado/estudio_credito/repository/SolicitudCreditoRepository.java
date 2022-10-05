@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface SolicitudCreditoRepository extends JpaRepository<SolicitudCredito, Long> {
 
     public List<SolicitudCredito> findByEstado(String estado);
+    
+    
 
 }
