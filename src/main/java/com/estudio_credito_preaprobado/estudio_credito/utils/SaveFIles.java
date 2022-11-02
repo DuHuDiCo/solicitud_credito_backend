@@ -24,7 +24,8 @@ public class SaveFIles {
     @Autowired
     private FileService fileService;
     
-    private static  final String  ruta = "J:\\Duvan Humberto Diaz Contreras\\ElectroHogar\\solicitud_credito_backend\\uploads\\";
+    private static  final String  ruta = "/var/lib/tomcat9/webapps/estudio_credito/uploads/";
+    
 
     public Archivo guardarCedula(String base64) throws Exception {
 
